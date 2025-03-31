@@ -1,7 +1,7 @@
-
 import {useState} from "react";
 import FormSearch from "./FormSearch.jsx";
 import StarRating from "./StarRating";
+import {Link} from "react-router";
 
 const data = [
     {
@@ -41,7 +41,7 @@ function UserList() {
     }
 
     const handleRatingClick = (id, rating) => {
-        setUsers(users.map((user) => (user.id === id ? { ...user, rating } : user)));
+        setUsers(users.map((user) => (user.id === id ? {...user, rating} : user)));
     };
 
     return (
@@ -69,15 +69,19 @@ function UserList() {
                         </tr>
                         </thead>
                         <tbody>
-                        {users.map((user,index) => (
+                        {users.map((user, index) => (
                             <tr key={user.id}>
                                 <th scope="row">{index + 1}</th>
                                 <td>{user.name}</td>
                                 <td>{user.email}</td>
                                 <td><StarRating user={user} onRatingChange={handleRatingClick}/></td>
                                 <td>
-                                <button type="button" className="btn btn-primary">Edit</button>
-                                    <button type="button" className="btn btn-danger" onClick={() => handleDeleteUser(user.id)}>Delete</button>
+                                    <Link to={`/admin/users/${user.id}/edit`}>
+                                        <button type="button" className="btn btn-primary">Edit</button>
+                                    </Link>
+                                    <button type="button" className="btn btn-danger"
+                                            onClick={() => handleDeleteUser(user.id)}>Delete
+                                    </button>
                                 </td>
                             </tr>
                         ))}
